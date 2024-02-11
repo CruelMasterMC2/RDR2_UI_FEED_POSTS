@@ -1,0 +1,33 @@
+structs needed:
+struct HelpData {
+	alignas(8) int duration;
+	alignas(8) int f_1;
+	alignas(8) int f_2;
+	alignas(8) int f_3;
+};
+struct HelpInfo {
+	alignas(8) int f_0;
+	alignas(8) const char* text;
+};
+
+Function:
+int DisplayHelp(std::string text, int duration) {
+	HelpData args1{};
+	args1.duration = duration;
+	args1.f_1 = 0;
+	args1.f_2 = 0;
+	args1.f_3 = 0;
+
+	HelpInfo args2{};
+	args2.f_0 = 0;
+	args2.text = MISC::VAR_STRING(10, "LITERAL_STRING", text.c_str());
+	return UIFEED::_UI_FEED_POST_HELP_TEXT((Any*)&args1, (Any*)&args2, true);
+}
+
+How to use:
+DisplayHelp("Help!!! HELLLLLP!!! HELP MEEE!!! HELLLLLLPPPPPP!!!", 100);
+
+or
+
+this way you can actually get the state in which the UI Post is in using this native - _UI_FEED_GET_MESSAGE_STATE - 0x59FA676177DBE4C9
+int postID = DisplayHelp("Help!!! HELLLLLP!!! HELP MEEE!!! HELLLLLLPPPPPP!!!", 100);
