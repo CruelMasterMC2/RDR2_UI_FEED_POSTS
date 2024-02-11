@@ -8,6 +8,7 @@ struct FeedTickerData {
 struct FeedTickerInfo {
 	alignas(8) int f_0;
 	alignas(8) const char* text;
+	alignas(8) int f_2;
 };
 
 
@@ -18,11 +19,13 @@ int DisplayFeedTicker(string text, int duration)
 	args1.duration = duration;
 
 	FeedTickerInfo args2;
+	args2.f_0 = 0;
 	args2.text = MISC::VAR_STRING(10, "LITERAL_STRING", text.c_str());
+	args2.f_2 = 0;
 	return UIFEED::_UI_FEED_POST_FEED_TICKER((Any*)&args1, (Any*)&args2, true);
 };
 
 
 
 how to use:
-DisplayFeedTicker("FeedTick", -2);
+DisplayFeedTicker("FeedTick", 5000);
