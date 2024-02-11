@@ -1,0 +1,32 @@
+structs needed:
+//locations can be found in the feed_location.ytd - .\Red Dead Redemption 2\update_4.rpf\x64\patch\textures\ui\ui_hud.rpf\feed_location.ytd
+struct LocationShardData {
+	alignas(8) int duration;
+	alignas(8) int f_1;
+	alignas(8) const char* f_2;
+	alignas(8) int f_3;
+};
+struct LocationShardInfo {
+	alignas(8) int f_0;
+	alignas(8) const char* location;
+	alignas(8) const char* text;
+};
+
+
+function:
+int DisplayLocationShard(string location, string text, int duration) {
+	LocationShardData args1{};
+	args1.duration = duration;
+	args1.f_1 = 0;
+	args1.f_2 = 0;
+	args1.f_3 = 0;
+
+	LocationShardInfo args2{};
+	args2.f_0 = 0;
+	args2.location = MISC::VAR_STRING(10, "LITERAL_STRING", location.c_str());//IconDict.c_str()
+	args2.text = MISC::VAR_STRING(10, "LITERAL_STRING", text.c_str());
+	return UIFEED::_UI_FEED_POST_LOCATION_SHARD((Any*)&args1, (Any*)&args2, false, true);
+}
+
+how to use:
+DisplayLocationShard("DISTRICT_GRIZZLIES", "Joe Momma", 5000);
