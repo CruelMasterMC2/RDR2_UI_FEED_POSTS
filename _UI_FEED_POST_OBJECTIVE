@@ -1,0 +1,27 @@
+structs needed:
+struct ObjectiveData {
+	alignas(8) int duration;
+	alignas(8) int f_1;
+	alignas(8) int f_2;
+	alignas(8) int f_3;
+};
+struct ObjectiveInfo {
+	alignas(8) int f_0;
+	alignas(8) const char* text;
+};
+
+
+function:
+int DisplayObjective(string text, int duration) {
+
+	ObjectiveData args1{};
+	args1.duration = duration;
+
+	ObjectiveInfo args2{};
+	args2.text = MISC::VAR_STRING(10, "LITERAL_STRING", text.c_str());
+	return UIFEED::_UI_FEED_POST_OBJECTIVE((Any*)&args1, (Any*)&args2, true);
+}
+
+
+how to use:
+DisplayObjective("Joe Momma's Subtitles.", 5000);
