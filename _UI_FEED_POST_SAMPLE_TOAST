@@ -1,0 +1,64 @@
+structs needed:
+struct LeftSampleToastData {
+	alignas(8) int duration;
+	alignas(8) const char* SoundDict;
+	alignas(8) const char* SoundName;
+	alignas(8) int f_3;
+	alignas(8) int f_4;
+	alignas(8) int f_5;
+	alignas(8) const char* thirdText;
+	alignas(8) int f_7;
+	alignas(8) int f_8;
+	alignas(8) int f_9;
+	alignas(8) int f_10;
+	alignas(8) int f_11;
+	alignas(8) int f_12;
+};
+struct LeftSampleToastInfo {
+	alignas(8) int f_0;
+	alignas(8) const char* text;
+	alignas(8) const char* subText;
+	alignas(8) const char* f_3;
+	alignas(8) int IconDict;
+	alignas(8) int Icon;
+	alignas(8) int f_6;
+	alignas(8) int f_7;
+};
+
+
+
+
+functions:
+int DisplayLeftSampleToast(string text, string subText, string thirdText, string IconDict, string Icon, string soundDict, string soundName, int duration) {
+
+	LeftSampleToastData args1{};
+	args1.duration = duration;
+	args1.SoundDict = soundDict.c_str();
+	args1.SoundName = soundName.c_str();
+	args1.f_3 = 0;
+	args1.f_4 = 0;
+	//this is if you dont want the third sub text popping up
+	if (thirdText != "") {
+		args1.thirdText = MISC::VAR_STRING(10, "LITERAL_STRING", thirdText.c_str());
+	}
+	//^
+	args1.f_7 = 1;
+	args1.f_8 = 0;
+	args1.f_9 = 0;
+	args1.f_10 = 0;
+	args1.f_11 = 0;
+	args1.f_12 = 0;
+
+	LeftSampleToastInfo args2{};
+	args2.f_0 = 0;
+	args2.text = MISC::VAR_STRING(10, "LITERAL_STRING", text.c_str());
+	args2.subText = MISC::VAR_STRING(10, "LITERAL_STRING", subText.c_str());
+	args2.f_3 = 0;
+	args2.IconDict = MISC::GET_HASH_KEY(IconDict.c_str());
+	args2.Icon = MISC::GET_HASH_KEY(Icon.c_str());
+	return UIFEED::_UI_FEED_POST_SAMPLE_TOAST((Any*)&args1, (Any*)&args2, true, true);
+}
+
+
+how to use:
+DisplayLeftSampleToast("text", "sub Text", "sub sub text", "HUD_TOASTS", "toast_player_deadeye", "Mission_Complete_Sounds", "Mission_Complete_Enter", 1000);
